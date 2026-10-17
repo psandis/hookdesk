@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HookDesk Mini</title>
+<link rel="stylesheet" href="/ui.css">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+</head><body>
+<header class="top">
+  <div class="brand"><img class="brand-mark" src="/logo.svg" width="28" height="28" alt=""><span class="brand-name">hookdesk</span><span class="brand-tag">mini</span></div>
+  <div class="top-meta">
+    <span class="kv"><span class="k">host</span><span class="v" data-bind="host">127.0.0.1</span></span>
+    <span class="kv"><span class="k">buffer</span><span class="v"><span data-bind="limit">200</span> req</span></span>
+    <span class="kv"><span class="k">storage</span><span class="v">memory</span></span>
+  </div>
+  <div id="live" class="live" title="Whether the dashboard can reach the local server"><span class="live-dot" aria-hidden="true"></span><span id="live-label">Live</span></div>
+  <div class="theme" role="group" aria-label="Color theme">
+    <button data-theme-choice="auto" title="Follow the system setting">Auto</button>
+    <button data-theme-choice="light" title="Light theme">Light</button>
+    <button data-theme-choice="dark" title="Dark theme">Dark</button>
+  </div>
+</header>
+
+<section class="scope">
+  <div class="stats">
+    <div class="stat"><div class="stat-k">Captured</div><div id="count" class="stat-v">0</div><div class="stat-d">requests held in memory</div></div>
+    <div class="stat"><div class="stat-k">Last 60 s</div><div id="rate" class="stat-v">0</div><div class="stat-d">requests in the past minute</div></div>
+    <div class="stat"><div class="stat-k">Last hit</div><div id="last" class="stat-v">none</div><div class="stat-d">since the newest request</div></div>
+    <div class="stat"><div class="stat-k">In memory</div><div id="bytes" class="stat-v">0 B</div><div class="stat-d">total size of all bodies</div></div>
+  </div>
+  <div class="scope-chart">
+    <div class="scope-head">
+      <span class="scope-title">Activity, last <span data-bind="window">5m</span></span>
+      <span class="scope-help">Each spike is one request. Taller means a bigger body. Hover to preview, click to open.</span>
+      <span class="legend"><span class="m m-get">GET</span><span class="m m-post">POST</span><span class="m m-put">PUT/PATCH</span><span class="m m-delete">DELETE</span><span class="m m-other">other</span></span>
+    </div>
+    <canvas id="scope" role="img" aria-label="Request activity timeline"></canvas>
+    <div id="axis" class="scope-axis"></div>
+  </div>
+</section>
+
+<section class="command">
+  <span class="command-label">Send a test</span>
+  <span class="prompt" aria-hidden="true">$</span>
+  <code id="command" class="command-text" title="Run this in a terminal to send a test webhook"></code>
+  <div class="command-actions">
+    <button id="copy" class="btn" title="Copy the base URL to paste into your webhook provider or app">Copy endpoint</button>
+    <button id="copy-cmd" class="btn" title="Copy the test command on the left">Copy curl</button>
+    <button id="refresh" class="btn btn-ghost" title="Reload the request list now">Refresh</button>
+    <button id="clear" class="btn btn-ghost btn-danger" title="Delete all captured requests">Clear</button>
+  </div>
+</section>
+
+<main class="split">
+  <section class="pane pane-list">
+    <div class="pane-head"><span class="pane-title">Requests<span class="pane-sub">newest first</span></span><span class="keys"><kbd>j</kbd><kbd>k</kbd> navigate</span></div>
+    <div class="table-head"><span>Method</span><span>Path</span><span class="num">Size</span><span class="num">Age</span></div>
+    <div id="entries" class="entries"></div>
+  </section>
+  <section class="pane pane-detail"><div id="detail" class="detail"></div></section>
+</main>
+
+<footer class="foot">
+  <span>Local only. Bodies are shown as received and may contain secrets.</span>
+  <span class="keys"><kbd>r</kbd> replay <kbd>c</kbd> copy curl</span>
+</footer>
+
+<div id="toast" class="toast" role="status"></div>
+<script src="/ui.js"></script></body></html>

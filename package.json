@@ -1,0 +1,45 @@
+{
+  "name": "hookdesk",
+  "version": "0.1.0",
+  "description": "Local-only webhook inspector: capture, inspect, and replay HTTP requests in a live browser dashboard",
+  "keywords": [
+    "webhook",
+    "webhooks",
+    "http",
+    "inspector",
+    "request-bin",
+    "replay",
+    "debugging",
+    "dashboard",
+    "local-first",
+    "developer-tools"
+  ],
+  "author": "Petri Sandholm <petri.sandholm@gmail.com>",
+  "homepage": "https://github.com/psandis/hookdesk#readme",
+  "bugs": {
+    "url": "https://github.com/psandis/hookdesk/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/psandis/hookdesk.git"
+  },
+  "type": "module",
+  "bin": {
+    "hookdesk": "./src/server.js"
+  },
+  "files": [
+    "src",
+    "config",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}

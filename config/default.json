@@ -1,0 +1,57 @@
+{
+  "server": {
+    "host": "127.0.0.1",
+    "port": 4317,
+    "allowedHostnames": ["127.0.0.1", "localhost"]
+  },
+  "capture": {
+    "pathPrefix": "/hook",
+    "maxBodyBytes": 1048576,
+    "maxEvents": 200
+  },
+  "replay": {
+    "timeoutMs": 5000,
+    "blockedMethods": ["CONNECT", "TRACE", "TRACK"],
+    "excludedHeaders": [
+      "host",
+      "origin",
+      "referer",
+      "content-length",
+      "connection",
+      "keep-alive",
+      "transfer-encoding",
+      "te",
+      "trailer",
+      "upgrade",
+      "expect",
+      "accept-encoding"
+    ]
+  },
+  "redaction": {
+    "placeholder": "[REDACTED]",
+    "sensitiveHeaders": [
+      "authorization",
+      "proxy-authorization",
+      "cookie",
+      "set-cookie",
+      "x-api-key",
+      "api-key",
+      "x-auth-token"
+    ]
+  },
+  "ui": {
+    "pollIntervalMs": 1500,
+    "timelineWindowMs": 300000,
+    "defaultTheme": "auto",
+    "curlExcludedHeaders": [
+      "host",
+      "content-length",
+      "connection",
+      "keep-alive",
+      "transfer-encoding",
+      "expect",
+      "accept-encoding",
+      "x-hookdesk-replay"
+    ]
+  }
+}
