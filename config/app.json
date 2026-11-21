@@ -1,0 +1,198 @@
+{
+  "name": "HookDesk Mini",
+  "headers": {
+    "contentType": "content-type",
+    "replay": "x-hookdesk-replay",
+    "eventId": "x-hookdesk-event-id"
+  },
+  "contentTypes": {
+    "json": "application/json; charset=utf-8",
+    "text": "text/plain; charset=utf-8"
+  },
+  "responseHeaders": {
+    "defaults": {
+      "cache-control": "no-store"
+    },
+    "always": {
+      "x-content-type-options": "nosniff"
+    },
+    "onPayloadTooLarge": {
+      "connection": "close"
+    }
+  },
+  "methods": {
+    "get": "GET",
+    "head": "HEAD",
+    "post": "POST",
+    "delete": "DELETE"
+  },
+  "methodsWithoutBody": [
+    "GET",
+    "HEAD"
+  ],
+  "status": {
+    "ok": 200,
+    "created": 201,
+    "badRequest": 400,
+    "forbidden": 403,
+    "notFound": 404,
+    "timeout": 408,
+    "conflict": 409,
+    "payloadTooLarge": 413,
+    "unsupportedMediaType": 415,
+    "serverError": 500,
+    "badGateway": 502
+  },
+  "routes": {
+    "config": "/api/config",
+    "events": "/api/events",
+    "wait": "/api/events/wait",
+    "export": "/api/events/export",
+    "event": "/api/events/{id}",
+    "replay": "/api/events/{id}/replay",
+    "mocks": "/api/mocks",
+    "mock": "/api/mocks/{id}"
+  },
+  "query": {
+    "method": "method",
+    "path": "path",
+    "since": "since",
+    "timeout": "timeout"
+  },
+  "uiDirectory": "ui",
+  "packageFile": "../package.json",
+  "security": {
+    "dashboardHeaders": {
+      "x-frame-options": "DENY",
+      "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'"
+    },
+    "mockHeaders": {
+      "content-security-policy": "sandbox"
+    }
+  },
+  "staticFiles": {
+    "page": {
+      "path": "/",
+      "file": "index.html",
+      "type": "text/html; charset=utf-8",
+      "dashboard": true,
+      "template": true
+    },
+    "script": {
+      "path": "/ui.js",
+      "file": "ui.js",
+      "type": "text/javascript; charset=utf-8"
+    },
+    "styles": {
+      "path": "/ui.css",
+      "file": "ui.css",
+      "type": "text/css; charset=utf-8"
+    },
+    "logo": {
+      "path": "/logo.svg",
+      "file": "logo.svg",
+      "type": "image/svg+xml"
+    }
+  },
+  "defaultResponse": {
+    "status": 200,
+    "body": {
+      "received": true
+    }
+  },
+  "mocks": {
+    "anyMethod": "*",
+    "prefixSuffix": "/*",
+    "ruleDefaults": {
+      "status": 200,
+      "delayMs": 0
+    },
+    "configRuleIdPrefix": "config-",
+    "generatedIdLength": 8
+  },
+  "export": {
+    "tool": "hookdesk",
+    "fileName": "hookdesk-export-{time}.json",
+    "headers": {
+      "content-disposition": "attachment; filename=\"{fileName}\""
+    }
+  },
+  "cli": {
+    "examplePath": "/demo",
+    "exampleContentType": "application/json",
+    "exampleBody": "{\"event\":\"hello\"}"
+  },
+  "ui": {
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "mockMethods": [
+      "*",
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE",
+      "HEAD",
+      "OPTIONS"
+    ],
+    "themeStorageKey": "hookdesk-theme",
+    "retryMs": 3000,
+    "toastMs": 2200,
+    "flashMs": 1400,
+    "rateWindowMs": 60000,
+    "errorStatusFrom": 400,
+    "shortIdLength": 8,
+    "ageTickMs": 1000,
+    "keys": {
+      "next": [
+        "j",
+        "ArrowDown"
+      ],
+      "previous": [
+        "k",
+        "ArrowUp"
+      ],
+      "replay": [
+        "r"
+      ],
+      "copyCurl": [
+        "c"
+      ]
+    },
+    "timeline": {
+      "gridDash": [
+        2,
+        4
+      ],
+      "gridRows": 3,
+      "selectionDash": [
+        3,
+        3
+      ],
+      "selectionAlpha": 0.35,
+      "idleAlpha": 0.7,
+      "lineWidth": 1,
+      "spikeWidthPx": 1,
+      "selectedSpikeWidthPx": 2,
+      "pulseLineWidth": 1.5,
+      "labelTopPx": 2,
+      "divisions": 5,
+      "redrawMs": 250,
+      "hoverRadiusPx": 8,
+      "minSpikePx": 8,
+      "topPaddingPx": 22,
+      "dotRadiusPx": 2.5,
+      "selectedDotRadiusPx": 3.5,
+      "pulseGrowPx": 18,
+      "labelHeightPx": 22,
+      "labelPaddingPx": 8,
+      "labelFontPx": 11
+    }
+  },
+  "scheme": "http"
+}

@@ -39,6 +39,15 @@
       "x-auth-token"
     ]
   },
+  "mocks": {
+    "maxDelayMs": 30000,
+    "maxRules": 100,
+    "rules": []
+  },
+  "wait": {
+    "defaultTimeoutMs": 10000,
+    "maxTimeoutMs": 60000
+  },
   "ui": {
     "pollIntervalMs": 1500,
     "timelineWindowMs": 300000,

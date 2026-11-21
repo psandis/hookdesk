@@ -1,0 +1,40 @@
+{
+  "server": {
+    "loopbackHosts": ["127.0.0.1", "localhost", "::1"],
+    "loopbackHostnames": ["127.0.0.1", "localhost", "[::1]"],
+    "port": { "min": 0, "max": 65535 },
+    "hostHeaderPattern": "^[A-Za-z0-9.:\\[\\]-]+$"
+  },
+  "capture": {
+    "pathPrefixPattern": "^/[A-Za-z0-9._~-]+(/[A-Za-z0-9._~-]+)*$",
+    "reservedPathPattern": "^/(api|ui\\.)",
+    "maxBodyBytes": { "min": 1, "max": 104857600 },
+    "maxEvents": { "min": 1, "max": 100000 }
+  },
+  "replay": {
+    "timeoutMs": { "min": 100, "max": 60000 }
+  },
+  "mocks": {
+    "maxDelayMs": { "min": 0, "max": 600000 },
+    "maxRules": { "min": 1, "max": 10000 },
+    "status": { "min": 200, "max": 599 },
+    "statusWithoutBody": [204, 304],
+    "ruleKeys": ["id", "method", "path", "status", "headers", "body", "delayMs"],
+    "apiContentTypePattern":"^application/json(\\s*;|$)",
+    "methodPattern":"^(\\*|[A-Z]+)$",
+    "idPattern":"^[A-Za-z0-9._-]{1,64}$",
+    "pathPattern": "^/[^\\s?#*]*$",
+    "headerValueForbiddenPattern": "[\\r\\n]",
+    "headerNamePattern":"^[!#$%&'*+.^_`|~0-9A-Za-z-]+$",
+    "reservedHeaders": ["content-length", "transfer-encoding", "connection", "keep-alive", "upgrade", "trailer"]
+  },
+  "wait": {
+    "maxTimeoutMs": { "min": 1000, "max": 600000 },
+    "defaultTimeoutMs": { "min": 0, "max": 600000 }
+  },
+  "ui": {
+    "pollIntervalMs": { "min": 250, "max": 60000 },
+    "timelineWindowMs": { "min": 10000, "max": 86400000 },
+    "themes": ["auto", "light", "dark"]
+  }
+}

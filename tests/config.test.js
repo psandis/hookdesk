@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { defaultConfigPath, loadConfig, mergeConfig } from '../src/config.js';
+import { defaultConfigPath, loadConfig, mergeConfig } from '../src/loader/settings.js';
 
 // Expected defaults come from the data file, so changing config/default.json never breaks tests.
 // Literal values below are either test inputs or security invariants.
@@ -75,6 +75,22 @@ test('normalizes header and method casing and freezes the result', () => {
   assert.deepEqual(config.redaction.sensitiveHeaders, ['x-secret']);
   assert.deepEqual(config.replay.blockedMethods, ['TRACE']);
   assert.ok(Object.isFrozen(config.capture));
+});
+
+test('validation bounds come from config/limits.json', () => {
+  const limits = JSON.parse(readFileSync(new URL('../config/limits.json', import.meta.url), 'utf8'));
+  assert.throws(() => loadConfig({ overrides: { server: { port: limits.server.port.max + 1 } } }), new RegExp(`${limits.server.port.min}\\.\\.${limits.server.port.max}`));
+  assert.throws(() => loadConfig({ overrides: { mocks: { maxDelayMs: limits.mocks.maxDelayMs.max + 1 } } }), /mocks.maxDelayMs/);
+  assert.throws(() => loadConfig({ overrides: { wait: { defaultTimeoutMs: defaults.wait.maxTimeoutMs + 1 } } }), /wait.defaultTimeoutMs/);
+});
+
+test('mock rules in the config are validated and get ids', () => {
+  const appJson = JSON.parse(readFileSync(new URL('../config/app.json', import.meta.url), 'utf8'));
+  const config = loadConfig({ overrides: { mocks: { rules: [{ path: `${defaults.capture.pathPrefix}/a`, status: 500 }, { id: 'mine', path: defaults.capture.pathPrefix }] } } });
+  assert.deepEqual(config.mocks.rules.map(rule => rule.id), [`${appJson.mocks.configRuleIdPrefix}1`, 'mine']);
+  assert.throws(() => loadConfig({ overrides: { mocks: { rules: [{ path: '/elsewhere' }] } } }), /mocks.rules\[0\].path/);
+  assert.throws(() => loadConfig({ overrides: { mocks: { rules: [{ id: 'x', path: defaults.capture.pathPrefix }, { id: 'x', path: defaults.capture.pathPrefix }] } } }), /ids must be unique/);
+  assert.throws(() => loadConfig({ overrides: { mocks: { maxRules: 1, rules: [{ path: defaults.capture.pathPrefix }, { path: defaults.capture.pathPrefix }] } } }), /more rules than mocks.maxRules/);
 });
 
 test('mergeConfig replaces arrays instead of concatenating', () => {

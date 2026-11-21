@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title></title>
+<link rel="stylesheet" href="{{staticFiles.styles.path}}">
+<link rel="icon" href="{{staticFiles.logo.path}}" type="image/svg+xml">
+</head><body data-config-url="{{routes.config}}" data-retry-ms="{{ui.retryMs}}" data-offline="{{messages.ui.offline}}">
+<header class="top">
+  <div class="brand"><img class="brand-mark" src="{{staticFiles.logo.path}}" width="28" height="28" alt=""><span class="brand-name">{{t.brandName}}</span><span class="brand-tag">{{t.brandTag}}</span></div>
+  <div class="top-meta">
+    <span class="kv"><span class="k">{{t.version}}</span><span class="v" data-bind="version"></span></span>
+    <span class="kv"><span class="k">{{t.host}}</span><span class="v" data-bind="host"></span></span>
+    <span class="kv"><span class="k">{{t.buffer}}</span><span class="v"><span data-bind="limit"></span> {{t.requestsShort}}</span></span>
+    <span class="kv"><span class="k">{{t.storage}}</span><span class="v">{{t.memory}}</span></span>
+  </div>
+  <div id="live" class="live" title="{{t.liveTitle}}"><span class="live-dot" aria-hidden="true"></span><span id="live-label">{{messages.ui.live}}</span></div>
+  <div id="themes" class="theme" role="group" aria-label="{{t.themeGroup}}"></div>
+</header>
+
+<section class="scope">
+  <div class="stats">
+    <div class="stat"><div class="stat-k">{{t.captured}}</div><div id="count" class="stat-v"></div><div class="stat-d">{{t.capturedNote}}</div></div>
+    <div class="stat"><div class="stat-k">{{t.last}} <span data-bind="rate-window"></span></div><div id="rate" class="stat-v"></div><div class="stat-d">{{t.rateNote}}</div></div>
+    <div class="stat"><div class="stat-k">{{t.lastHit}}</div><div id="last" class="stat-v"></div><div class="stat-d">{{t.lastHitNote}}</div></div>
+    <div class="stat"><div class="stat-k">{{t.inMemory}}</div><div id="bytes" class="stat-v"></div><div class="stat-d">{{t.inMemoryNote}}</div></div>
+  </div>
+  <div class="scope-chart">
+    <div class="scope-head">
+      <span class="scope-title">{{t.activity}} <span data-bind="window"></span></span>
+      <span class="scope-help">{{t.activityHelp}}</span>
+      <span id="legend" class="legend"></span>
+    </div>
+    <canvas id="scope" role="img" aria-label="{{t.timelineLabel}}"></canvas>
+    <div id="axis" class="scope-axis"></div>
+  </div>
+</section>
+
+<section class="command">
+  <span class="command-label">{{t.sendTest}}</span>
+  <span class="prompt" aria-hidden="true">$</span>
+  <code id="command" class="command-text" title="{{t.commandTitle}}"></code>
+  <div class="command-actions">
+    <button id="copy" class="btn" title="{{t.copyEndpointTitle}}">{{t.copyEndpoint}}</button>
+    <button id="copy-cmd" class="btn" title="{{t.copyCurlTitle}}">{{t.copyCurl}}</button>
+    <a class="btn btn-link" href="{{routes.export}}" download title="{{t.exportTitle}}">{{t.export}}</a>
+    <button id="refresh" class="btn btn-ghost" title="{{t.refreshTitle}}">{{t.refresh}}</button>
+    <button id="clear" class="btn btn-ghost btn-danger" title="{{t.clearTitle}}">{{t.clear}}</button>
+  </div>
+</section>
+
+<details class="mocks">
+  <summary class="mocks-summary"><span class="command-label">{{t.mockResponses}}</span><span id="mocks-count" class="mocks-count"></span><span class="mocks-hint">{{t.mocksHint}}</span></summary>
+  <div class="mocks-body">
+    <div id="mocks-list" class="mocks-list"></div>
+    <form id="mock-form" class="mock-form">
+      <label>{{t.formMethod}}<select name="method"></select></label>
+      <label>{{t.formPath}} <span data-bind="prefix-suffix"></span><input name="path" required spellcheck="false"></label>
+      <label>{{t.formStatus}}<input name="status" type="number" required></label>
+      <label>{{t.formDelay}}<input name="delayMs" type="number" required></label>
+      <label>{{t.formHeaders}}<textarea name="headers" rows="2" spellcheck="false"></textarea></label>
+      <label>{{t.formBody}}<textarea name="body" rows="2" spellcheck="false"></textarea></label>
+      <div class="mock-actions">
+        <button class="btn btn-primary" type="submit">{{t.addRule}}</button>
+        <button id="mocks-clear" class="btn btn-ghost btn-danger" type="button">{{t.removeAllRules}}</button>
+      </div>
+    </form>
+  </div>
+</details>
+
+<main class="split">
+  <section class="pane pane-list">
+    <div class="pane-head"><span class="pane-title">{{t.requests}}<span class="pane-sub">{{t.newestFirst}}</span></span><span class="keys"><span data-keys="next previous"></span> {{t.navigate}}</span></div>
+    <div class="table-head"><span>{{t.columnMethod}}</span><span>{{t.columnPath}}</span><span class="num">{{t.columnStatus}}</span><span class="num">{{t.columnSize}}</span><span class="num">{{t.columnAge}}</span></div>
+    <div id="entries" class="entries"></div>
+  </section>
+  <section class="pane pane-detail"><div id="detail" class="detail"></div></section>
+</main>
+
+<footer class="foot">
+  <span>{{t.footer}}</span>
+  <span class="keys"><span data-keys="replay"></span> {{t.replay}} <span data-keys="copyCurl"></span> {{t.copyCurlKey}}</span>
+</footer>
+
+<div id="toast" class="toast" role="status"></div>
+<script src="{{staticFiles.script.path}}"></script></body></html>

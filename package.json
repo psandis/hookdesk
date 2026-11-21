@@ -1,6 +1,6 @@
 {
   "name": "hookdesk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Local-only webhook inspector: capture, inspect, and replay HTTP requests in a live browser dashboard",
   "keywords": [
     "webhook",
@@ -25,21 +25,22 @@
   },
   "type": "module",
   "bin": {
-    "hookdesk": "./src/server.js"
+    "hookdesk": "./src/cli.js"
   },
   "files": [
     "src",
     "config",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE"
   ],
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "node --watch src/server.js",
+    "start": "node src/cli.js",
+    "dev": "node --watch src/cli.js",
     "test": "node --test"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=26"
   },
   "license": "MIT"
 }
